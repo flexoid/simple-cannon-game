@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Target : MonoBehaviour 
+public class Target : MonoBehaviour
 {
     public GameObject explosion;
 
@@ -14,32 +14,32 @@ public class Target : MonoBehaviour
     float creationTime;
     float timeout;
 
-    /* Используется для выдвигания/задвигания мишеней
-     * с одинаковой скоростью вне зависимости от FPS */
+    /* РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РІС‹РґРІРёРіР°РЅРёСЏ/Р·Р°РґРІРёРіР°РЅРёСЏ РјРёС€РµРЅРµР№
+     * СЃ РѕРґРёРЅР°РєРѕРІРѕР№ СЃРєРѕСЂРѕСЃС‚СЊСЋ РІРЅРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ FPS */
     float lastUpdate;
 
     bool isVisible = true;
 
-	void Start() 
+	void Start()
     {
         creationTime = Time.time;
-        //Время исчезновения мишени - случайное число в заданном диапазоне
+        //Р’СЂРµРјСЏ РёСЃС‡РµР·РЅРѕРІРµРЅРёСЏ РјРёС€РµРЅРё - СЃР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ РІ Р·Р°РґР°РЅРЅРѕРј РґРёР°РїР°Р·РѕРЅРµ
         timeout = Random.Range(minTimeut, maxTimeut);
 
         gameController = GameObject.Find("GameController");
         targetController = GameObject.Find("TargetController");
 	}
-	
-	void Update() 
+
+	void Update()
     {
         if (lastUpdate == 0f)
             lastUpdate = Time.time;
 
-        //По истечени таймаута убрать мишень
+        //РџРѕ РёСЃС‚РµС‡РµРЅРё С‚Р°Р№РјР°СѓС‚Р° СѓР±СЂР°С‚СЊ РјРёС€РµРЅСЊ
         if (Time.time - creationTime >= timeout)
             Hide();
 
-        //Выдвигаем или задвигаем мишени в зависимости от isVisible
+        //Р’С‹РґРІРёРіР°РµРј РёР»Рё Р·Р°РґРІРёРіР°РµРј РјРёС€РµРЅРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ isVisible
         if (isVisible)
         {
             if (transform.position.y < transform.localScale.x / 2)
@@ -66,9 +66,9 @@ public class Target : MonoBehaviour
 
     void Destruct()
     {
-        //Создаем эффект взрыва
+        //РЎРѕР·РґР°РµРј СЌС„С„РµРєС‚ РІР·СЂС‹РІР°
         Instantiate(explosion, transform.position - transform.up.normalized * (transform.localScale.y / 2), transform.rotation);
-        //Синхронизируем параметры с объектом GameController
+        //РЎРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј РїР°СЂР°РјРµС‚СЂС‹ СЃ РѕР±СЉРµРєС‚РѕРј GameController
         if (gameController != null)
             gameController.SendMessage("SetScore", (int)Vector3.Distance(transform.position, GameObject.Find("Cannon").transform.position),
                 SendMessageOptions.DontRequireReceiver);

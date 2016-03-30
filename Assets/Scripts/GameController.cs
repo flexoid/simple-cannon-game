@@ -4,20 +4,20 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
 
-    /* Игровой счет */
+    /* РРіСЂРѕРІРѕР№ СЃС‡РµС‚ */
     public int shots = 0;
     int score = 0;
 
     GameObject guiController;
 
-	void Start() 
+	void Start()
     {
         Screen.showCursor = false;
         guiController = GameObject.Find("GUIController");
 	}
 
-    /* Инкрементирование счетчика выстрелов
-     * Метод вызывается из других объектов */
+    /* РРЅРєСЂРµРјРµРЅС‚РёСЂРѕРІР°РЅРёРµ СЃС‡РµС‚С‡РёРєР° РІС‹СЃС‚СЂРµР»РѕРІ
+     * РњРµС‚РѕРґ РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ */
     void IncShots()
     {
         shots++;
@@ -25,8 +25,8 @@ public class GameController : MonoBehaviour
             guiController.SendMessage("SetShots", shots, SendMessageOptions.DontRequireReceiver);
     }
 
-    /* Установление количества очков
-     * Метод вызывается из других объектов */
+    /* РЈСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° РѕС‡РєРѕРІ
+     * РњРµС‚РѕРґ РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ */
     void SetScore(int score)
     {
         this.score += score;

@@ -11,22 +11,22 @@ public class GUIController : MonoBehaviour
 
     GUIStyle style;
 
-	void Start() 
+	void Start()
     {
-        /* Задание стиля текста */
+        /* Р—Р°РґР°РЅРёРµ СЃС‚РёР»СЏ С‚РµРєСЃС‚Р° */
         style = new GUIStyle();
         style.fontSize = 20;
         style.normal.textColor = Color.red;
 	}
-	
-    // Перерисовка интерфейса
+
+    // РџРµСЂРµСЂРёСЃРѕРІРєР° РёРЅС‚РµСЂС„РµР№СЃР°
     void OnGUI()
     {
-        // Отрисовка количества очков и выстрелов 
+        // РћС‚СЂРёСЃРѕРІРєР° РєРѕР»РёС‡РµСЃС‚РІР° РѕС‡РєРѕРІ Рё РІС‹СЃС‚СЂРµР»РѕРІ
         GUI.Label(new Rect(10, 10, 250, 20), "Shots: " + shots.ToString(), style);
         GUI.Label(new Rect(10, 30, 250, 20), "Score: " + score.ToString(), style);
 
-        // Рисуем индикатор силы выстрела
+        // Р РёСЃСѓРµРј РёРЅРґРёРєР°С‚РѕСЂ СЃРёР»С‹ РІС‹СЃС‚СЂРµР»Р°
         if (holdingTime != 0)
         {
             Texture2D lol = new Texture2D(1, 1);
@@ -37,8 +37,8 @@ public class GUIController : MonoBehaviour
         }
     }
 
-    /* Следующие методы вызываются из других объектов
-     * для синхронизации значений счета игры */
+    /* РЎР»РµРґСѓСЋС‰РёРµ РјРµС‚РѕРґС‹ РІС‹Р·С‹РІР°СЋС‚СЃСЏ РёР· РґСЂСѓРіРёС… РѕР±СЉРµРєС‚РѕРІ
+     * РґР»СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё Р·РЅР°С‡РµРЅРёР№ СЃС‡РµС‚Р° РёРіСЂС‹ */
     void SetShots(int shots)
     { this.shots = shots; }
 

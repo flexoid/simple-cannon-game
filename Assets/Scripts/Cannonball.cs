@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Cannonball : MonoBehaviour 
+public class Cannonball : MonoBehaviour
 {
-    public float disappearTime = 60f; //Время, через которое выпущенное ядро уничтожится
+    public float disappearTime = 60f; //Р’СЂРµРјСЏ, С‡РµСЂРµР· РєРѕС‚РѕСЂРѕРµ РІС‹РїСѓС‰РµРЅРЅРѕРµ СЏРґСЂРѕ СѓРЅРёС‡С‚РѕР¶РёС‚СЃСЏ
 
     void Start()
     {
@@ -12,7 +12,7 @@ public class Cannonball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Вызывается метод разрушения мишени, с которой произошло столкновение
+        //Р’С‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґ СЂР°Р·СЂСѓС€РµРЅРёСЏ РјРёС€РµРЅРё, СЃ РєРѕС‚РѕСЂРѕР№ РїСЂРѕРёР·РѕС€Р»Рѕ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ
         collision.gameObject.SendMessage("Destruct", SendMessageOptions.DontRequireReceiver);
     }
 }

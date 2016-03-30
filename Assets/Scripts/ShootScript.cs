@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class ShootScript : MonoBehaviour 
+public class ShootScript : MonoBehaviour
 {
-    private float lastShotTime; 
+    private float lastShotTime;
     private float clickTime;
     private bool mouseHolding;
     public float maxBulletImpulse = 300f;
@@ -15,55 +15,55 @@ public class ShootScript : MonoBehaviour
     GameObject gameController;
     GameObject guiController;
 
-	void Start() 
+	void Start()
     {
         lastShotTime = 0.0f;
         clickTime = 0.0f;
         mouseHolding = false;
         gameController = GameObject.Find("GameController");
         guiController = GameObject.Find("GUIController");
-        // Отправляем данные о максимальном времени нажатия в скрипт отрисовки GUI
+        // РћС‚РїСЂР°РІР»СЏРµРј РґР°РЅРЅС‹Рµ Рѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё РЅР°Р¶Р°С‚РёСЏ РІ СЃРєСЂРёРїС‚ РѕС‚СЂРёСЃРѕРІРєРё GUI
         if (guiController != null)
             guiController.SendMessage("SetMaxHoldingTime", maxHoldingTime, SendMessageOptions.DontRequireReceiver);
 	}
-	
-	void Update() 
+
+	void Update()
     {
-        // Если кнопка мыши до этого была нажата
+        // Р•СЃР»Рё РєРЅРѕРїРєР° РјС‹С€Рё РґРѕ СЌС‚РѕРіРѕ Р±С‹Р»Р° РЅР°Р¶Р°С‚Р°
         if (mouseHolding)
         {
-            // Время, которое была зажата мышь, не больше максимального
+            // Р’СЂРµРјСЏ, РєРѕС‚РѕСЂРѕРµ Р±С‹Р»Р° Р·Р°Р¶Р°С‚Р° РјС‹С€СЊ, РЅРµ Р±РѕР»СЊС€Рµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ
             float time = ((Time.time - clickTime) < maxHoldingTime) ? (Time.time - clickTime) : maxHoldingTime;
 
-            // Если ее отпустили, производим выстрел
+            // Р•СЃР»Рё РµРµ РѕС‚РїСѓСЃС‚РёР»Рё, РїСЂРѕРёР·РІРѕРґРёРј РІС‹СЃС‚СЂРµР»
             if (!(Input.GetKey(KeyCode.Mouse0)))
             {
-                // Создаем экземпляр ядра на конце дула пушки
+                // РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ СЏРґСЂР° РЅР° РєРѕРЅС†Рµ РґСѓР»Р° РїСѓС€РєРё
                 GameObject bull_clone = (GameObject)Instantiate(bullet,
                     transform.position + transform.up.normalized * transform.localScale.y, transform.rotation);
-                // Игнорируем коллизии с дулом пушки
+                // РРіРЅРѕСЂРёСЂСѓРµРј РєРѕР»Р»РёР·РёРё СЃ РґСѓР»РѕРј РїСѓС€РєРё
                 Physics.IgnoreCollision(bull_clone.collider, collider);
-                // Задаем силу объекту
+                // Р—Р°РґР°РµРј СЃРёР»Сѓ РѕР±СЉРµРєС‚Сѓ
                 bull_clone.rigidbody.AddForce(transform.up * (maxBulletImpulse * (time / maxHoldingTime)), ForceMode.Impulse);
-                // Подготавливаем параметры для следующего выстрела
+                // РџРѕРґРіРѕС‚Р°РІР»РёРІР°РµРј РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ СЃР»РµРґСѓСЋС‰РµРіРѕ РІС‹СЃС‚СЂРµР»Р°
                 lastShotTime = Time.time;
                 mouseHolding = false;
-                // Инкрементируем число выстрелов
+                // РРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј С‡РёСЃР»Рѕ РІС‹СЃС‚СЂРµР»РѕРІ
                 if (gameController != null)
                     gameController.SendMessage("IncShots", SendMessageOptions.DontRequireReceiver);
                 time = 0;
             }
-            // Отправляем данные о времени нажатия в скрипт отрисовки GUI
+            // РћС‚РїСЂР°РІР»СЏРµРј РґР°РЅРЅС‹Рµ Рѕ РІСЂРµРјРµРЅРё РЅР°Р¶Р°С‚РёСЏ РІ СЃРєСЂРёРїС‚ РѕС‚СЂРёСЃРѕРІРєРё GUI
             if (guiController != null)
                 guiController.SendMessage("SetHoldingTime", time, SendMessageOptions.DontRequireReceiver);
         }
-        //Если кнопка зажата не была
+        //Р•СЃР»Рё РєРЅРѕРїРєР° Р·Р°Р¶Р°С‚Р° РЅРµ Р±С‹Р»Р°
         else
         {
-            //Если кнопка нажата сейчас
+            //Р•СЃР»Рё РєРЅРѕРїРєР° РЅР°Р¶Р°С‚Р° СЃРµР№С‡Р°СЃ
             if (Input.GetKey(KeyCode.Mouse0))
             {
-                //Проверяем, прошло ли минимальное время между выстрелами
+                //РџСЂРѕРІРµСЂСЏРµРј, РїСЂРѕС€Р»Рѕ Р»Рё РјРёРЅРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ РјРµР¶РґСѓ РІС‹СЃС‚СЂРµР»Р°РјРё
                 if (Time.time > (lastShotTime + shootSpeed))
                 {
                     mouseHolding = true;
